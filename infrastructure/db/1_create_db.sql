@@ -1,0 +1,219 @@
+CREATE DATABASE online_shop_db;
+COMMIT;
+
+-- CREATE TABLE product_category (
+--                                   id SERIAL PRIMARY KEY,
+--                                   name VARCHAR ( 256 ) UNIQUE NOT NULL,
+--                                   description TEXT NULL,
+--                                   created_at TIMESTAMP NOT NULL,
+--                                   modified_at TIMESTAMP NULL,
+--                                   deleted_at TIMESTAMP NULL
+-- );
+-- COMMIT;
+--
+-- CREATE TABLE discount (
+--                           id SERIAL PRIMARY KEY,
+--                           name VARCHAR ( 256 ) UNIQUE NOT NULL,
+--                           description TEXT NULL,
+--                           value DECIMAL NOT NULL,
+--                           created_at TIMESTAMP NOT NULL,
+--                           modified_at TIMESTAMP NULL,
+--                           deleted_at TIMESTAMP NULL
+-- );
+-- COMMIT;
+--
+-- CREATE TABLE product (
+--                          id SERIAL PRIMARY KEY,
+--                          name VARCHAR ( 256 ) UNIQUE NOT NULL,
+--                          description TEXT NULL,
+--                          product_category_id INT NOT NULL,
+--                          discount_id INT NOT NULL,
+--                          price DECIMAL NOT NULL,
+--                          quantity INT NOT NULL,
+--                          sku VARCHAR ( 256 ) NOT NULL,
+--                          created_at TIMESTAMP NOT NULL,
+--                          modified_at TIMESTAMP NULL,
+--                          deleted_at TIMESTAMP NULL,
+--                          CONSTRAINT fk_product_product_category FOREIGN KEY (product_category_id) REFERENCES product_category(id),
+--                          CONSTRAINT fk_product_discount FOREIGN KEY (discount_id) REFERENCES discount(id)
+-- );
+-- COMMIT;
+--
+-- CREATE TABLE product_attachment (
+--                          id SERIAL PRIMARY KEY,
+--                          name VARCHAR ( 256 ) UNIQUE NOT NULL,
+--                          data BYTEA NOT NULL,
+--                          product_id INT NOT NULL,
+--                          CONSTRAINT fk_product_image_product FOREIGN KEY (product_id) REFERENCES product(id)
+-- );
+-- COMMIT;
+--
+-- CREATE TABLE "user" (
+--                         id SERIAL PRIMARY KEY,
+--                         username VARCHAR ( 256 ) UNIQUE NOT NULL,
+--                         "password" VARCHAR ( 256 ) NOT NULL,
+--                         first_name VARCHAR ( 256 ) NOT NULL,
+--                         last_name VARCHAR ( 256 ) NOT NULL,
+--                         address VARCHAR ( 1024 ) NOT NULL,
+--                         email VARCHAR ( 256 ) NOT NULL,
+--                         phone_number VARCHAR ( 256 ) NULL,
+--                         country VARCHAR ( 256 ) NOT NULL,
+--                         created_at TIMESTAMP NOT NULL,
+--                         modified_at TIMESTAMP NULL,
+--                         deleted_at TIMESTAMP NULL
+-- );
+-- COMMIT;
+--
+-- CREATE TABLE user_payment (
+--                         id SERIAL PRIMARY KEY,
+--                         payment_type VARCHAR ( 256 ) NOT NULL,
+--                         "provider" VARCHAR ( 256 ) NOT NULL,
+--                         account_no VARCHAR ( 256 ) NOT NULL,
+--                         created_at TIMESTAMP NOT NULL,
+--                         modified_at TIMESTAMP NULL,
+--                         deleted_at TIMESTAMP NULL,
+--                         user_id INT NOT NULL,
+--                         CONSTRAINT fk_user_payment_user FOREIGN KEY (user_id) REFERENCES "user"(id)
+-- );
+-- COMMIT;
+--
+-- CREATE TABLE order_detail (
+--                               id SERIAL PRIMARY KEY,
+--                               user_id INT NOT NULL,
+--                               total DECIMAL NOT NULL,
+--                               created_at TIMESTAMP NOT NULL,
+--                               modified_at TIMESTAMP NULL,
+--                               CONSTRAINT fk_order_detail_user FOREIGN KEY (user_id) REFERENCES "user"(id)
+-- );
+-- COMMIT;
+--
+-- CREATE TABLE payment_detail (
+--                                 id SERIAL PRIMARY KEY,
+--                                 order_detail_id INT NOT NULL,
+--                                 amount DECIMAL NOT NULL,
+--                                 "provider" VARCHAR ( 256 ) NOT NULL,
+--                                 status VARCHAR ( 256 ) NOT NULL,
+--                                 created_at TIMESTAMP NOT NULL,
+--                                 modified_at TIMESTAMP NULL,
+--                                 CONSTRAINT fk_payment_detail_order_detail FOREIGN KEY (order_detail_id) REFERENCES order_detail(id)
+-- );
+-- COMMIT;
+--
+-- CREATE TABLE order_item (
+--                             id SERIAL PRIMARY KEY,
+--                             quantity INT NOT NULL,
+--                             order_detail_id INT NOT NULL,
+--                             product_id INT NOT NULL,
+--                             created_at TIMESTAMP NOT NULL,
+--                             modified_at TIMESTAMP NULL,
+--                             CONSTRAINT fk_order_item_order_detail FOREIGN KEY (order_detail_id) REFERENCES order_detail(id),
+--                             CONSTRAINT fk_order_item_product FOREIGN KEY (product_id) REFERENCES product(id)
+-- );
+-- COMMIT;
+--
+-- CREATE TABLE shopping_session (
+--                             id SERIAL PRIMARY KEY,
+--                             user_id INT NOT NULL,
+--                             created_at TIMESTAMP NOT NULL,
+--                             modified_at TIMESTAMP NULL,
+--                             CONSTRAINT fk_shopping_session_user FOREIGN KEY (user_id) REFERENCES "user"(id)
+-- );
+-- COMMIT;
+--
+-- CREATE TABLE cart_item (
+--                             id SERIAL PRIMARY KEY,
+--                             quantity INT NOT NULL,
+--                             shopping_session_id INT NOT NULL,
+--                             product_id INT NOT NULL,
+--                             created_at TIMESTAMP NOT NULL,
+--                             modified_at TIMESTAMP NULL,
+--                             CONSTRAINT fk_cart_item_shopping_session FOREIGN KEY (shopping_session_id) REFERENCES shopping_session(id),
+--                             CONSTRAINT fk_cart_item_product FOREIGN KEY (product_id) REFERENCES product(id)
+-- );
+-- COMMIT;
+--
+-- CREATE TABLE wishlist (
+--                            id SERIAL PRIMARY KEY,
+--                            user_id INT NOT NULL,
+--                            product_id INT NOT NULL,
+--                            created_at TIMESTAMP NOT NULL,
+--                            modified_at TIMESTAMP NULL,
+--                            deleted_at TIMESTAMP NULL,
+--                            CONSTRAINT fk_wishlist_user FOREIGN KEY (user_id) REFERENCES "user"(id),
+--                            CONSTRAINT fk_wishlist_product FOREIGN KEY (product_id) REFERENCES product(id)
+-- );
+-- COMMIT;
+--
+-- CREATE TABLE comment (
+--                           id SERIAL PRIMARY KEY,
+--                           "comment" TEXT NOT NULL,
+--                           user_id INT NOT NULL,
+--                           product_id INT NOT NULL,
+--                           created_at TIMESTAMP NOT NULL,
+--                           modified_at TIMESTAMP NULL,
+--                           deleted_at TIMESTAMP NULL,
+--                           CONSTRAINT fk_comment_user FOREIGN KEY (user_id) REFERENCES "user"(id),
+--                           CONSTRAINT fk_comment_product FOREIGN KEY (product_id) REFERENCES product(id)
+-- );
+-- COMMIT;
+--
+-- INSERT INTO product_category(id, name, description, created_at, modified_at, deleted_at)
+-- VALUES
+--     (1, 'Smartphones', '', CURRENT_TIMESTAMP, NULL, NULL),
+--     (2, 'Laptops', '', CURRENT_TIMESTAMP, NULL, NULL),
+--     (3, 'Speaker', '', CURRENT_TIMESTAMP, NULL, NULL),
+--     (4, 'Television', '', CURRENT_TIMESTAMP, NULL, NULL),
+--     (5, 'Cameras', '', CURRENT_TIMESTAMP, NULL, NULL),
+--     (6, 'Computers', '', CURRENT_TIMESTAMP, NULL, NULL),
+--     (7, 'Power banks', '', CURRENT_TIMESTAMP, NULL, NULL),
+--     (8, 'Game consoles', '', CURRENT_TIMESTAMP, NULL, NULL),
+--     (9, 'Tablets', '', CURRENT_TIMESTAMP, NULL, NULL),
+--     (10, 'Headphones', '', CURRENT_TIMESTAMP, NULL, NULL);
+-- COMMIT;
+--
+-- INSERT INTO discount(id, name, description, value, created_at, modified_at, deleted_at)
+-- VALUES
+--     (1, 'Salebration', '', 0.1, CURRENT_TIMESTAMP, NULL, NULL),
+--     (2, 'Discount Derby', '', 0.15, CURRENT_TIMESTAMP, NULL, NULL),
+--     (3, 'Value Vault', '', 0.12, CURRENT_TIMESTAMP, NULL, NULL),
+--     (4, 'Sale Fever Frenzy', '', 0.17, CURRENT_TIMESTAMP, NULL, NULL),
+--     (5, 'VIP Valuables', '', 0.09, CURRENT_TIMESTAMP, NULL, NULL);
+-- COMMIT;
+--
+-- INSERT INTO product (id, name, description, product_category_id, discount_id, price, quantity, sku, created_at, modified_at, deleted_at)
+-- VALUES
+--     (1, 'TCL 32-Inch Class S1', ' 1080p LED Smart TV with Fire TV (32S350F, 2023 Model), Alexa Built-in, Apple AirPlay Compatibility, Streaming FHD Television,Black', 1, 1, 1000, 10, 'sku6876876', CURRENT_TIMESTAMP, NULL, NULL),
+--     (2, 'TCL 32-Inch Class S2', ' 1080p LED Smart TV with Fire TV (32S350F, 2023 Model), Alexa Built-in, Apple AirPlay Compatibility, Streaming FHD Television,Black', 1, 1, 1000, 10, 'sku6876876', CURRENT_TIMESTAMP, NULL, NULL),
+--     (3, 'TCL 32-Inch Class S3', ' 1080p LED Smart TV with Fire TV (32S350F, 2023 Model), Alexa Built-in, Apple AirPlay Compatibility, Streaming FHD Television,Black', 1, 1, 1000, 10, 'sku6876876', CURRENT_TIMESTAMP, NULL, NULL),
+--     (4, 'TCL 32-Inch Class S4', ' 1080p LED Smart TV with Fire TV (32S350F, 2023 Model), Alexa Built-in, Apple AirPlay Compatibility, Streaming FHD Television,Black', 1, 1, 1000, 10, 'sku6876876', CURRENT_TIMESTAMP, NULL, NULL),
+--     (5, 'TCL 32-Inch Class S5', ' 1080p LED Smart TV with Fire TV (32S350F, 2023 Model), Alexa Built-in, Apple AirPlay Compatibility, Streaming FHD Television,Black', 1, 1, 1000, 10, 'sku6876876', CURRENT_TIMESTAMP, NULL, NULL),
+--     (6, 'TCL 32-Inch Class S6', ' 1080p LED Smart TV with Fire TV (32S350F, 2023 Model), Alexa Built-in, Apple AirPlay Compatibility, Streaming FHD Television,Black', 1, 1, 1000, 10, 'sku6876876', CURRENT_TIMESTAMP, NULL, NULL),
+--     (7, 'TCL 32-Inch Class S7', ' 1080p LED Smart TV with Fire TV (32S350F, 2023 Model), Alexa Built-in, Apple AirPlay Compatibility, Streaming FHD Television,Black', 1, 1, 1000, 10, 'sku6876876', CURRENT_TIMESTAMP, NULL, NULL),
+--     (8, 'TCL 32-Inch Class S8', ' 1080p LED Smart TV with Fire TV (32S350F, 2023 Model), Alexa Built-in, Apple AirPlay Compatibility, Streaming FHD Television,Black', 1, 1, 1000, 10, 'sku6876876', CURRENT_TIMESTAMP, NULL, NULL);
+-- COMMIT;
+--
+-- INSERT INTO "user" (id, username, password, first_name, last_name, address, email, phone_number, country, created_at, modified_at, deleted_at)
+-- VALUES
+--     (1, 'user', 'password', 'First Name 1', 'Last Name 1', 'Address 1', 'email1@mail.com', '11111111', 'Kyrgyzstan', CURRENT_TIMESTAMP, NULL, NULL);
+-- COMMIT;
+--
+-- INSERT INTO wishlist (id, user_id, product_id, created_at, modified_at, deleted_at)
+-- VALUES
+--     (1, 1, 1, CURRENT_TIMESTAMP, NULL, NULL),
+--     (2, 1, 2, CURRENT_TIMESTAMP, NULL, NULL),
+--     (3, 1, 3, CURRENT_TIMESTAMP, NULL, NULL),
+--     (4, 1, 4, CURRENT_TIMESTAMP, NULL, NULL);
+-- COMMIT;
+--
+-- INSERT INTO shopping_session (id,user_id,created_at,modified_at )
+-- VALUES
+--     (1, 1, CURRENT_TIMESTAMP, NULL);
+-- COMMIT;
+--
+-- INSERT INTO cart_item (id ,quantity,shopping_session_id,product_id,created_at,modified_at)
+-- VALUES
+--     (1, 1, 1, 1, CURRENT_TIMESTAMP, NULL),
+--     (2, 2, 1, 2, CURRENT_TIMESTAMP, NULL),
+--     (3, 3, 1, 3, CURRENT_TIMESTAMP, NULL),
+--     (4, 4, 1, 4, CURRENT_TIMESTAMP, NULL);
+-- COMMIT;

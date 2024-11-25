@@ -1,0 +1,9 @@
+{
+  "order": ["template", "script", "style"],
+  "root": true,
+  "extends": [
+    "plugin:vue/essential",
+    "plugin:prettier/recommended",
+    "eslint:recommended",
+  ],
+}
