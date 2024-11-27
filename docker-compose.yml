@@ -5,7 +5,7 @@ services:
     restart: always
     container_name: frontend
     ports:
-      - "3000:3000"
+      - "3002:3001"
     volumes:
       - /app/node_modules
       - ./frontend:/app
@@ -13,7 +13,7 @@ services:
     image: nginx:alpine
     container_name: nginx-app
     ports:
-      - 3001:3001
+      - "3001:3001"
     depends_on:
       - client-frontend
 
@@ -41,7 +41,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8080:8080"
+      - "8181:8080"
     depends_on:
       service-db:
         condition: service_healthy
