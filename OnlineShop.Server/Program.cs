@@ -3,12 +3,12 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using OnlineShop.Core.Data;
 using OnlineShop.Core.Interfaces.Repository;
 using OnlineShop.Core.Interfaces.Service;
 using OnlineShop.Core.Model;
-using OnlineShop.Core.Repository;
 using OnlineShop.Core.Services;
+using OnlineShop.Infrastructure.Data;
+using OnlineShop.Infrastructure.Repository;
 
 namespace OnlineShop.Server;
 

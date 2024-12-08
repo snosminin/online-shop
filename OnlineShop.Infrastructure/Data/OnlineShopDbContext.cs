@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using OnlineShop.Core.Configuration;
 using OnlineShop.Core.Model;
+using OnlineShop.Infrastructure.Configuration;
 
-namespace OnlineShop.Core.Data;
+namespace OnlineShop.Infrastructure.Data;
 
 public class OnlineShopDbContext : IdentityDbContext<AppUser>
 {
