@@ -21,6 +21,7 @@ public class Program
         builder.Services.AddCors();
         builder.Services.AddControllers();
         builder.Services.AddMapster();
+        builder.Services.AddSwaggerGen();
 
         builder.Services.AddDbContext<OnlineShopDbContext>(options =>
             options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
