@@ -82,6 +82,12 @@ public class Program
         if (pendingMigrations.Any())
             await context.Database.MigrateAsync();
 
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
+
         app.UseCors(x => x
             .AllowAnyMethod()
             .AllowAnyHeader()
