@@ -95,7 +95,7 @@ public class Program
             .AllowCredentials());
 
         app.UseHttpsRedirection();
-        app.MapIdentityApi<AppUser>();
+        app.MapGroup("/api").MapIdentityApi<AppUser>();
 
         app.UseAuthentication();
         app.UseAuthorization();
