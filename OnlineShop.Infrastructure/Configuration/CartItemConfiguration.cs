@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using OnlineShop.Core.Model;
 
-namespace OnlineShop.Core.Configuration;
+namespace OnlineShop.Infrastructure.Configuration;
 
 public class CartItemConfiguration : IEntityTypeConfiguration<CartItem>
 {

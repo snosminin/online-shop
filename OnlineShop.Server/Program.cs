@@ -3,12 +3,12 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using OnlineShop.Core.Data;
 using OnlineShop.Core.Interfaces.Repository;
 using OnlineShop.Core.Interfaces.Service;
 using OnlineShop.Core.Model;
-using OnlineShop.Core.Repository;
 using OnlineShop.Core.Services;
+using OnlineShop.Infrastructure.Data;
+using OnlineShop.Infrastructure.Repository;
 
 namespace OnlineShop.Server;
 
@@ -21,6 +21,7 @@ public class Program
         builder.Services.AddCors();
         builder.Services.AddControllers();
         builder.Services.AddMapster();
+        builder.Services.AddSwaggerGen();
 
         builder.Services.AddDbContext<OnlineShopDbContext>(options =>
             options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -29,7 +30,6 @@ public class Program
         builder.Services.AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
         builder.Services.AddScoped<IWishlistRepository, WishlistRepository>();
         builder.Services.AddScoped<IShoppingSessionRepository, ShoppingSessionRepository>();
-
 
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddScoped<IProductService, ProductService>();
@@ -82,6 +82,12 @@ public class Program
         if (pendingMigrations.Any())
             await context.Database.MigrateAsync();
 
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
+
         app.UseCors(x => x
             .AllowAnyMethod()
             .AllowAnyHeader()
@@ -89,7 +95,7 @@ public class Program
             .AllowCredentials());
 
         app.UseHttpsRedirection();
-        app.MapIdentityApi<AppUser>();
+        app.MapGroup("/api").MapIdentityApi<AppUser>();
 
         app.UseAuthentication();
         app.UseAuthorization();

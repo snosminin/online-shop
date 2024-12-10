@@ -28,6 +28,8 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "OnlineShop.Client", "Online
 		SlnRelativePath = "OnlineShop.Client\"
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineShop.Infrastructure", "OnlineShop.Infrastructure\OnlineShop.Infrastructure.csproj", "{1C565102-3683-4AD6-9A8D-18F28C0F4510}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{1EB15464-3C4A-48D9-90DF-16A9A8906F38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1EB15464-3C4A-48D9-90DF-16A9A8906F38}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{1EB15464-3C4A-48D9-90DF-16A9A8906F38}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{1C565102-3683-4AD6-9A8D-18F28C0F4510}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C565102-3683-4AD6-9A8D-18F28C0F4510}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C565102-3683-4AD6-9A8D-18F28C0F4510}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C565102-3683-4AD6-9A8D-18F28C0F4510}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using OnlineShop.Core.Data;
 using OnlineShop.Core.Interfaces.Repository;
 using OnlineShop.Core.Model;
+using OnlineShop.Infrastructure.Data;
 
-namespace OnlineShop.Core.Repository;
+namespace OnlineShop.Infrastructure.Repository;
 
 public class ProductRepository : IProductRepository
 {
