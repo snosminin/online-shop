@@ -47,44 +47,19 @@ public class AccountController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
-        var result = await _signInManager.PasswordSignInAsync(request.Username, request.Password, false, false);
-        if (!result.Succeeded) return BadRequest("Can't find user");
-
         var user = await _userManager.FindByNameAsync(request.Username);
-        if (user == null || string.IsNullOrEmpty(user.UserName)) throw new Exception("No such user");
+        if (user == null) return Unauthorized("Can't find user");
 
-        var identity = GetIdentity(user);
+        var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
+        if (!result.Succeeded) return Unauthorized("Authentication failed");
 
-        var now = DateTime.UtcNow;
-        var jwt = new JwtSecurityToken(
-            AuthOptions.Issuer,
-            AuthOptions.Audience,
-            notBefore: now,
-            claims: identity.Claims,
-            expires: now.Add(TimeSpan.FromMinutes(AuthOptions.Lifetime)),
-            signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(),
-                SecurityAlgorithms.HmacSha256));
-        var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
-
+        var token = _userService.GetToken(user);
         var response = new LoginResponse
         {
-            Token = encodedJwt,
-            Username = user.UserName
+            Token = token,
+            Username = user.UserName!
         };
 
         return Ok(response);
-    }
-
-    private static ClaimsIdentity GetIdentity(AppUser user)
-    {
-        var claims = new List<Claim>
-        {
-            new(ClaimsIdentity.DefaultNameClaimType, user.UserName!),
-            new(ClaimsIdentity.DefaultRoleClaimType, "Client")
-        };
-        var claimsIdentity =
-            new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
-                ClaimsIdentity.DefaultRoleClaimType);
-        return claimsIdentity;
     }
 }

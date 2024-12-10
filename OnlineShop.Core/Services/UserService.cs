@@ -34,24 +34,6 @@ public class UserService : IUserService
         return identityResult;
     }
 
-    public async Task<LoginResponse> Login(LoginRequest loginRequest)
-    {
-        var result =
-            await _signInManager.PasswordSignInAsync(loginRequest.Username, loginRequest.Password, false, false);
-        if (!result.Succeeded) throw new Exception("Invalid credentials");
-
-        var user = await _userManager.FindByNameAsync(loginRequest.Username);
-        if (user == null || string.IsNullOrEmpty(user.UserName)) throw new Exception("No such user");
-
-        var token = GetToken(user);
-
-        return new LoginResponse
-        {
-            Token = token,
-            Username = user.UserName
-        };
-    }
-
     public bool ValidateToken(string token, out JwtSecurityToken? jwt)
     {
         var validationParameters = new TokenValidationParameters
@@ -77,7 +59,7 @@ public class UserService : IUserService
         }
     }
 
-    private string GetToken(AppUser user)
+    public string GetToken(AppUser user)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]!);
