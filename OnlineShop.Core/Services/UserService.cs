@@ -7,22 +7,19 @@ using Microsoft.IdentityModel.Tokens;
 using OnlineShop.Core.Dto.Auth;
 using OnlineShop.Core.Interfaces.Service;
 using OnlineShop.Core.Model;
-using LoginRequest = OnlineShop.Core.Dto.Auth.LoginRequest;
 
 namespace OnlineShop.Core.Services;
 
 public class UserService : IUserService
 {
     private readonly IConfiguration _configuration;
-    private readonly SignInManager<AppUser> _signInManager;
     private readonly UserManager<AppUser> _userManager;
 
 
-    public UserService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,
+    public UserService(UserManager<AppUser> userManager,
         IConfiguration configuration)
     {
         _userManager = userManager;
-        _signInManager = signInManager;
         _configuration = configuration;
     }
 
