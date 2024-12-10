@@ -1,8 +1,6 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
+using Microsoft.EntityFrameworkCore;
 using OnlineShop.Core.Dto.Auth;
 using OnlineShop.Core.Interfaces.Service;
 using OnlineShop.Core.Model;
@@ -31,16 +29,11 @@ public class AccountController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Register([FromBody] RegisterUserRequest request)
     {
-        try
-        {
-            var result = await _userService.Create(request);
-            return result.Succeeded ? Ok(result.Succeeded) : BadRequest(result.Errors);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError($"Error in {GetType().Name}: {ex.Message}");
-            return BadRequest($"{BadRequest().StatusCode} : {ex.Message}");
-        }
+        if (await _userManager.Users.AnyAsync(u => u.UserName == request.UserName))
+            return BadRequest($"User with such user name already exists");
+
+        var result = await _userService.Create(request);
+        return result.Succeeded ? Ok(result.Succeeded) : BadRequest(result.Errors);
     }
 
     [Route("api/login")]
