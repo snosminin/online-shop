@@ -29,32 +29,48 @@ public class AccountController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Register([FromBody] RegisterUserRequest request)
     {
-        if (await _userManager.Users.AnyAsync(u => u.UserName == request.UserName))
-            return BadRequest($"User with such user name already exists");
+        try
+        {
+            if (await _userManager.Users.AnyAsync(u => u.UserName == request.UserName))
+                return BadRequest($"User with such user name already exists");
 
-        var result = await _userService.Create(request);
-        return result.Succeeded ? Ok(result.Succeeded) : BadRequest(result.Errors);
+            var result = await _userService.Create(request);
+            return result.Succeeded ? Ok(result.Succeeded) : BadRequest(result.Errors);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Error in {GetType().Name}: {ex.Message}");
+            return BadRequest($"{BadRequest().StatusCode} : {ex.Message}");
+        }
     }
 
     [Route("api/login")]
     [HttpPost]
     public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
-        var user = await _userManager.FindByNameAsync(request.Username);
-        if (user == null) return Unauthorized("Can't find user");
-
-        var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
-        if (!result.Succeeded) return Unauthorized("Authentication failed");
-
-        var token = _userService.GetToken(user);
-        if (string.IsNullOrEmpty(token)) return Unauthorized("Authentication failed");
-
-        var response = new LoginResponse
+        try
         {
-            Token = token,
-            Username = user.UserName!
-        };
+            var user = await _userManager.FindByNameAsync(request.Username);
+            if (user == null) return Unauthorized("Can't find user");
 
-        return Ok(response);
+            var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
+            if (!result.Succeeded) return Unauthorized("Authentication failed");
+
+            var token = _userService.GetToken(user);
+            if (string.IsNullOrEmpty(token)) return Unauthorized("Authentication failed");
+
+            var response = new LoginResponse
+            {
+                Token = token,
+                Username = user.UserName!
+            };
+
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Error in {GetType().Name}: {ex.Message}");
+            return BadRequest($"{BadRequest().StatusCode} : {ex.Message}");
+        }
     }
 }
