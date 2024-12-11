@@ -47,6 +47,8 @@ public class AccountController : ControllerBase
         if (!result.Succeeded) return Unauthorized("Authentication failed");
 
         var token = _userService.GetToken(user);
+        if (string.IsNullOrEmpty(token)) return Unauthorized("Authentication failed");
+
         var response = new LoginResponse
         {
             Token = token,

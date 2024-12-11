@@ -72,9 +72,7 @@ public class UserService : IUserService
                 new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
         };
         var token = tokenHandler.CreateToken(tokenDescriptor);
-        var userToken = tokenHandler.WriteToken(token);
-        if (string.IsNullOrEmpty(userToken)) throw new Exception("Authorization failed");
 
-        return userToken;
+        return tokenHandler.WriteToken(token);
     }
 }
