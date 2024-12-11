@@ -52,11 +52,9 @@ public class Program
                 options.RequireHttpsMetadata = false;
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidateIssuer = true,
-                    ValidIssuer = builder.Configuration["JWT:Issuer"],
-                    ValidateAudience = true,
-                    ValidAudience = builder.Configuration["JWT:Audience"],
-                    ValidateLifetime = true,
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = false,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"])),
                     ValidateIssuerSigningKey = true
                 };
@@ -95,11 +93,10 @@ public class Program
         app.UseCors(x => x
             .AllowAnyMethod()
             .AllowAnyHeader()
-            .SetIsOriginAllowed(origin => true)
-            .AllowCredentials());
+            .SetIsOriginAllowed(origin => true).AllowCredentials());
 
         app.UseHttpsRedirection();
-        app.MapGroup("/api").MapIdentityApi<AppUser>();
+        app.MapIdentityApi<AppUser>();
 
         app.UseAuthentication();
         app.UseAuthorization();
