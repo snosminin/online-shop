@@ -1,8 +1,6 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
+using Microsoft.EntityFrameworkCore;
 using OnlineShop.Core.Dto.Auth;
 using OnlineShop.Core.Interfaces.Service;
 using OnlineShop.Core.Model;
@@ -33,6 +31,9 @@ public class AccountController : ControllerBase
     {
         try
         {
+            if (await _userManager.Users.AnyAsync(u => u.UserName == request.UserName))
+                return BadRequest($"User with such user name already exists");
+
             var result = await _userService.Create(request);
             return result.Succeeded ? Ok(result.Succeeded) : BadRequest(result.Errors);
         }
@@ -47,44 +48,29 @@ public class AccountController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
-        var result = await _signInManager.PasswordSignInAsync(request.Username, request.Password, false, false);
-        if (!result.Succeeded) return BadRequest("Can't find user");
-
-        var user = await _userManager.FindByNameAsync(request.Username);
-        if (user == null || string.IsNullOrEmpty(user.UserName)) throw new Exception("No such user");
-
-        var identity = GetIdentity(user);
-
-        var now = DateTime.UtcNow;
-        var jwt = new JwtSecurityToken(
-            AuthOptions.Issuer,
-            AuthOptions.Audience,
-            notBefore: now,
-            claims: identity.Claims,
-            expires: now.Add(TimeSpan.FromMinutes(AuthOptions.Lifetime)),
-            signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(),
-                SecurityAlgorithms.HmacSha256));
-        var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
-
-        var response = new LoginResponse
+        try
         {
-            Token = encodedJwt,
-            Username = user.UserName
-        };
+            var user = await _userManager.FindByNameAsync(request.Username);
+            if (user == null) return Unauthorized("Can't find user");
 
-        return Ok(response);
-    }
+            var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
+            if (!result.Succeeded) return Unauthorized("Authentication failed");
 
-    private static ClaimsIdentity GetIdentity(AppUser user)
-    {
-        var claims = new List<Claim>
+            var token = _userService.GetToken(user);
+            if (string.IsNullOrEmpty(token)) return Unauthorized("Authentication failed");
+
+            var response = new LoginResponse
+            {
+                Token = token,
+                Username = user.UserName!
+            };
+
+            return Ok(response);
+        }
+        catch (Exception ex)
         {
-            new(ClaimsIdentity.DefaultNameClaimType, user.UserName!),
-            new(ClaimsIdentity.DefaultRoleClaimType, "Client")
-        };
-        var claimsIdentity =
-            new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
-                ClaimsIdentity.DefaultRoleClaimType);
-        return claimsIdentity;
+            _logger.LogError($"Error in {GetType().Name}: {ex.Message}");
+            return BadRequest($"{BadRequest().StatusCode} : {ex.Message}");
+        }
     }
 }

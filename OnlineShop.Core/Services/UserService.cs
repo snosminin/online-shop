@@ -7,22 +7,19 @@ using Microsoft.IdentityModel.Tokens;
 using OnlineShop.Core.Dto.Auth;
 using OnlineShop.Core.Interfaces.Service;
 using OnlineShop.Core.Model;
-using LoginRequest = OnlineShop.Core.Dto.Auth.LoginRequest;
 
 namespace OnlineShop.Core.Services;
 
 public class UserService : IUserService
 {
     private readonly IConfiguration _configuration;
-    private readonly SignInManager<AppUser> _signInManager;
     private readonly UserManager<AppUser> _userManager;
 
 
-    public UserService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,
+    public UserService(UserManager<AppUser> userManager,
         IConfiguration configuration)
     {
         _userManager = userManager;
-        _signInManager = signInManager;
         _configuration = configuration;
     }
 
@@ -32,24 +29,6 @@ public class UserService : IUserService
         var identityResult = await _userManager.CreateAsync(appUser, registerUserRequest.Password);
         if (identityResult.Succeeded) identityResult = await _userManager.AddToRoleAsync(appUser, "Client");
         return identityResult;
-    }
-
-    public async Task<LoginResponse> Login(LoginRequest loginRequest)
-    {
-        var result =
-            await _signInManager.PasswordSignInAsync(loginRequest.Username, loginRequest.Password, false, false);
-        if (!result.Succeeded) throw new Exception("Invalid credentials");
-
-        var user = await _userManager.FindByNameAsync(loginRequest.Username);
-        if (user == null || string.IsNullOrEmpty(user.UserName)) throw new Exception("No such user");
-
-        var token = GetToken(user);
-
-        return new LoginResponse
-        {
-            Token = token,
-            Username = user.UserName
-        };
     }
 
     public bool ValidateToken(string token, out JwtSecurityToken? jwt)
@@ -77,7 +56,7 @@ public class UserService : IUserService
         }
     }
 
-    private string GetToken(AppUser user)
+    public string GetToken(AppUser user)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]!);
@@ -93,9 +72,7 @@ public class UserService : IUserService
                 new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
         };
         var token = tokenHandler.CreateToken(tokenDescriptor);
-        var userToken = tokenHandler.WriteToken(token);
-        if (string.IsNullOrEmpty(userToken)) throw new Exception("Authorization failed");
 
-        return userToken;
+        return tokenHandler.WriteToken(token);
     }
 }

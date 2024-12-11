@@ -9,6 +9,7 @@ using OnlineShop.Core.Model;
 using OnlineShop.Core.Services;
 using OnlineShop.Infrastructure.Data;
 using OnlineShop.Infrastructure.Repository;
+using System.Text;
 
 namespace OnlineShop.Server;
 
@@ -37,10 +38,13 @@ public class Program
         builder.Services.AddScoped<IWishlistService, WishlistService>();
         builder.Services.AddScoped<IShoppingSessionService, ShoppingSessionService>();
 
-        builder.Services.AddIdentityCore<AppUser>().AddRoles<IdentityRole>()
-            .AddEntityFrameworkStores<OnlineShopDbContext>().AddApiEndpoints();
-        builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
-            .AddIdentityCookies();
+        builder.Services.AddIdentityCore<AppUser>()
+            .AddRoles<IdentityRole>()
+            .AddRoleManager<RoleManager<IdentityRole>>()
+            .AddEntityFrameworkStores<OnlineShopDbContext>()
+            .AddSignInManager<SignInManager<AppUser>>()
+            .AddUserManager<UserManager<AppUser>>()
+            .AddApiEndpoints();
 
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
@@ -48,12 +52,10 @@ public class Program
                 options.RequireHttpsMetadata = false;
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidateIssuer = true,
-                    ValidIssuer = AuthOptions.Issuer,
-                    ValidateAudience = true,
-                    ValidAudience = AuthOptions.Audience,
-                    ValidateLifetime = true,
-                    IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = false,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"])),
                     ValidateIssuerSigningKey = true
                 };
             });
@@ -95,7 +97,7 @@ public class Program
             .AllowCredentials());
 
         app.UseHttpsRedirection();
-        app.MapGroup("/api").MapIdentityApi<AppUser>();
+        app.MapIdentityApi<AppUser>();
 
         app.UseAuthentication();
         app.UseAuthorization();
