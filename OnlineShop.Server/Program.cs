@@ -93,7 +93,8 @@ public class Program
         app.UseCors(x => x
             .AllowAnyMethod()
             .AllowAnyHeader()
-            .SetIsOriginAllowed(origin => true).AllowCredentials());
+            .SetIsOriginAllowed(origin => true)
+            .AllowCredentials());
 
         app.UseHttpsRedirection();
         app.MapIdentityApi<AppUser>();
