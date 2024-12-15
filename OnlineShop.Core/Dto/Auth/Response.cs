@@ -2,12 +2,12 @@
 
 public abstract class Response
 {
-    protected Response(bool success = false, string errorMessage = "")
+    protected Response(bool success, Error? error)
     {
         Success = success;
-        ErrorMessage = errorMessage;
+        Error = error;
     }
 
     public bool Success { get; }
-    public string ErrorMessage { get; }
+    public Error? Error { get; }
 }
