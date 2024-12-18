@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using OnlineShop.Core.Dto;
 using OnlineShop.Core.Dto.Auth;
 using OnlineShop.Core.Interfaces.Service;
 using OnlineShop.Core.Model;
