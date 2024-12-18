@@ -8,13 +8,10 @@ namespace OnlineShop.Server.Controllers;
 
 public class ProductCategoryController : BaseApiController
 {
-    private readonly ILogger<ProductCategoryController> _logger;
     private readonly IProductCategoryService _productCategoryService;
 
-    public ProductCategoryController(ILogger<ProductCategoryController> logger,
-        IProductCategoryService productCategoryService)
+    public ProductCategoryController(IProductCategoryService productCategoryService)
     {
-        _logger = logger;
         _productCategoryService = productCategoryService;
     }
 

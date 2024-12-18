@@ -10,14 +10,11 @@ namespace OnlineShop.Server.Controllers;
 
 public class ShoppingSessionController : BaseApiController
 {
-    private readonly ILogger<ShoppingSessionController> _logger;
     private readonly IShoppingSessionService _shoppingSessionService;
     private readonly UserManager<AppUser> _userManager;
 
-    public ShoppingSessionController(ILogger<ShoppingSessionController> logger,
-        IShoppingSessionService shoppingSessionService, UserManager<AppUser> userManager)
+    public ShoppingSessionController(IShoppingSessionService shoppingSessionService, UserManager<AppUser> userManager)
     {
-        _logger = logger;
         _shoppingSessionService = shoppingSessionService;
         _userManager = userManager;
     }

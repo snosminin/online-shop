@@ -11,16 +11,14 @@ namespace OnlineShop.Server.Controllers;
 [ApiController]
 public class AccountController : ControllerBase
 {
-    private readonly ILogger<AccountController> _logger;
     private readonly SignInManager<AppUser> _signInManager;
     private readonly UserManager<AppUser> _userManager;
     private readonly IUserService _userService;
 
-    public AccountController(ILogger<AccountController> logger, IUserService userService,
+    public AccountController(IUserService userService,
         SignInManager<AppUser> signInManager, UserManager<AppUser> userManager)
     {
         _userService = userService;
-        _logger = logger;
         _signInManager = signInManager;
         _userManager = userManager;
     }
