@@ -28,18 +28,10 @@ public class WishlistController : BaseApiController
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-        try
-        {
-            var user = await _userManager.FindByNameAsync(User.Identity?.Name!);
-            var wishlists = await _wishlistService.GetAllWishlistsByUserIdAsync(user?.Id!);
-            var mapped = wishlists.Adapt<List<WishlistDto>>();
+        var user = await _userManager.FindByNameAsync(User.Identity?.Name!);
+        var wishlists = await _wishlistService.GetAllWishlistsByUserIdAsync(user?.Id!);
+        var mapped = wishlists.Adapt<List<WishlistDto>>();
 
-            return Ok(mapped);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError($"Error in {GetType().Name}: {ex.Message}");
-            return BadRequest($"{BadRequest().StatusCode} : {ex.Message}");
-        }
+        return Ok(mapped);
     }
 }

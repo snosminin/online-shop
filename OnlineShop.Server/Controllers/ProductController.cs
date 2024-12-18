@@ -22,17 +22,10 @@ public class ProductController : BaseApiController
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-        try
-        {
-            var products = await _productService.GetAllProductsAsync();
-            var mapped = products.Adapt<List<ProductDto>>();
 
-            return Ok(mapped);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError($"Error in {GetType().Name}: {ex.Message}");
-            return BadRequest($"{BadRequest().StatusCode} : {ex.Message}");
-        }
+        var products = await _productService.GetAllProductsAsync();
+        var mapped = products.Adapt<List<ProductDto>>();
+
+        return Ok(mapped);
     }
 }
