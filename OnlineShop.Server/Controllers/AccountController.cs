@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using OnlineShop.Core.Dto;
 using OnlineShop.Core.Dto.Auth;
 using OnlineShop.Core.Interfaces.Service;
 using OnlineShop.Core.Model;
@@ -29,7 +30,7 @@ public class AccountController : ControllerBase
     {
 
         if (await _userManager.Users.AnyAsync(u => u.UserName == request.UserName))
-            return BadRequest($"User with such user name already exists");
+            return BadRequest("User with such user name already exists");
 
         var result = await _userService.Create(request);
         return result.Succeeded ? Ok(result.Succeeded) : BadRequest(result.Errors);
