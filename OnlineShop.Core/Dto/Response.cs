@@ -1,15 +1,9 @@
 ﻿namespace OnlineShop.Core.Dto;
 
-public class Response<T>
+public class Response<T>:BaseResponse<T>
 {
-    public Response(T? data, bool success, string message)
+    protected Response(T data) : base(data, true,string.Empty)
     {
-        Data = data;
-        Success = success;
-        Message = message;
+        
     }
-
-    public bool Success { get; }
-    public string Message { get; } = string.Empty;
-    public T? Data { get; }
 }

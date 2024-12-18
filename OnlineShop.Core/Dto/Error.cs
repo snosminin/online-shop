@@ -1,8 +1,8 @@
 ﻿namespace OnlineShop.Core.Dto
 {
-    public class Error : Response<object>
+    public class Error : BaseResponse<object>
     {
-        public Error(string message) : base(null,false, message)
+        public Error(string errorMessage) : base(null,false, errorMessage)
         {
         }
     }
