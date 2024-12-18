@@ -1,8 +1,8 @@
 ﻿namespace OnlineShop.Core.Dto.Auth;
 
-public class RegisterUserResponse : Response
+public class RegisterUserResponse : Success<bool>
 {
-    public RegisterUserResponse() : base(true, null)
+    public RegisterUserResponse() : base(true)
     {
         
     }
