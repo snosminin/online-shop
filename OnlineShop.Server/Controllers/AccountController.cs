@@ -27,7 +27,6 @@ public class AccountController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Register([FromBody] RegisterUserRequest request)
     {
-
         if (await _userManager.Users.AnyAsync(u => u.UserName == request.UserName))
             return BadRequest("User with such user name already exists");
 
@@ -40,7 +39,6 @@ public class AccountController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
-
         var user = await _userManager.FindByNameAsync(request.Username);
         if (user == null) return Unauthorized("Can't find user");
 

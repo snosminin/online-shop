@@ -19,7 +19,6 @@ public class ProductCategoryController : BaseApiController
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-
         var productCategories = await _productCategoryService.GetAllProductCategoriesAsync();
         var mapped = productCategories.Adapt<List<ProductCategoryDto>>();
 

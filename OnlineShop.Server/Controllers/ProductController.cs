@@ -19,7 +19,6 @@ public class ProductController : BaseApiController
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-
         var products = await _productService.GetAllProductsAsync();
         var mapped = products.Adapt<List<ProductDto>>();
 
