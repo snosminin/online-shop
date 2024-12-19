@@ -28,10 +28,10 @@ public class AccountController : ControllerBase
     public async Task<IActionResult> Register([FromBody] CreateUserRequest request)
     {
         if (await _userManager.Users.AnyAsync(u => u.UserName == request.UserName))
-            return BadRequest("User with such user name already exists" );
+            return BadRequest("User with such user name already exists");
 
         var result = await _userService.Create(request);
-        return result.Succeeded ? Ok(new CreateUserResponse( result.Succeeded)) : BadRequest(result.Errors);
+        return result.Succeeded ? Ok(new CreateUserResponse(result.Succeeded)) : BadRequest(result.Errors);
     }
 
     [Route("api/login")]
@@ -47,12 +47,7 @@ public class AccountController : ControllerBase
         var token = _userService.GetToken(user);
         if (string.IsNullOrEmpty(token)) return Unauthorized("Authentication failed");
 
-        var response = new LoginResponse
-        {
-            Token = token,
-            Username = user.UserName!
-        };
-
+        var response = new LoginResponse(token: token, username: user.UserName!);
         return Ok(response);
     }
 }

@@ -1,7 +1,7 @@
 ﻿namespace OnlineShop.Core.Dto.Auth;
 
-public class LoginResponse
+public class LoginResponse(string token, string username)
 {
-    public required string Token { get; set; }
-    public required string Username { get; set; }
+    public string Token { get;} = token;
+    public string Username { get; } = username;
 }
