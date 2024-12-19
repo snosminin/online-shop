@@ -39,7 +39,7 @@ public class AccountController : ControllerBase
     public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
         var user = await _userManager.FindByNameAsync(request.Username);
-        if (user == null) return Unauthorized("Can't find user");
+        if (user == null) return NotFound("The user does not exist.");
 
         var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
         if (!result.Succeeded) return Unauthorized("Authentication failed");
