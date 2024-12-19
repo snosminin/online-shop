@@ -15,7 +15,7 @@ namespace OnlineShop.Server;
 
 public class Program
 {
-    public static async Task Main(string[] args)
+    public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
@@ -81,9 +81,9 @@ public class Program
         var services = scope.ServiceProvider;
 
         var context = services.GetRequiredService<OnlineShopDbContext>();
-        var pendingMigrations = await context.Database.GetPendingMigrationsAsync();
+        var pendingMigrations = context.Database.GetPendingMigrations();
         if (pendingMigrations.Any())
-            await context.Database.MigrateAsync();
+            context.Database.Migrate();
 
         if (app.Environment.IsDevelopment())
         {
