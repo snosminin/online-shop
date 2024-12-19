@@ -25,14 +25,13 @@ public class AccountController : ControllerBase
 
     [Route("api/register")]
     [HttpPost]
-    public async Task<IActionResult> Register([FromBody] RegisterUserRequest request)
+    public async Task<IActionResult> Register([FromBody] CreateUserRequest request)
     {
         if (await _userManager.Users.AnyAsync(u => u.UserName == request.UserName))
-            return BadRequest("User with such user name already exists");
+            return BadRequest("User with such user name already exists" );
 
         var result = await _userService.Create(request);
-        return result.Succeeded ? Ok(result.Succeeded) : BadRequest(result.Errors);
-
+        return result.Succeeded ? Ok(new CreateUserResponse( result.Succeeded)) : BadRequest(result.Errors);
     }
 
     [Route("api/login")]

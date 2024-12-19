@@ -7,7 +7,7 @@ namespace OnlineShop.Core.Interfaces.Service;
 
 public interface IUserService
 {
-    Task<IdentityResult> Create(RegisterUserRequest registerUserRequest);
+    Task<IdentityResult> Create(CreateUserRequest registerUserRequest);
     bool ValidateToken(string token, out JwtSecurityToken? jwt);
     string GetToken(AppUser user);
 }
