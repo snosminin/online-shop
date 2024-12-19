@@ -23,7 +23,7 @@ public class Program
         builder.Services.AddControllers();
         builder.Services.AddMapster();
         builder.Services.AddSwaggerGen();
-        builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+        builder.Services.AddExceptionHandler<OnlineShopErrorHandler>();
 
         builder.Services.AddDbContext<OnlineShopDbContext>(options =>
             options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));

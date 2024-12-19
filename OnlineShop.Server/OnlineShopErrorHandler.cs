@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 
 namespace OnlineShop.Server
 {
-    public class GlobalExceptionHandler(IHostEnvironment env, ILogger<GlobalExceptionHandler> logger)
+    public class OnlineShopErrorHandler(IHostEnvironment env, ILogger<OnlineShopErrorHandler> logger)
         : IExceptionHandler
     {
         private const string UnhandledExceptionMsg = "An unhandled exception has occurred while executing the request.";
