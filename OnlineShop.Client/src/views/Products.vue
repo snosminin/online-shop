@@ -27,7 +27,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { useProductStore } from '../store/useProductStore';
-import { Product } from '../model/Product';
+import { Product } from '../dto/Product';
 import _ from 'lodash';
 import { useRoute } from 'vue-router';
 
@@ -62,9 +62,9 @@ const sortAndFilter = (products: Product[]) =>
       products,
       (x) =>
         !route.params.productCategory ||
-        x.productCategory.name == route.params.productCategory,
+        x.productCategory.name == route.params.productCategory
     ),
-    getSort(),
+    getSort()
   );
 
 onMounted(async () => {

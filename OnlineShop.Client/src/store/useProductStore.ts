@@ -1,8 +1,8 @@
-import { ProductAttachment } from './../model/ProductAttachment';
+import { ProductAttachment } from '../dto/ProductAttachment';
 import { defineStore } from 'pinia';
 import axios from 'axios';
 import { orderBy } from 'lodash';
-import { Product } from '../model/Product';
+import { Product } from '../dto/Product';
 import { authConfig, source } from '../util/config';
 
 export interface RootState {
@@ -15,7 +15,7 @@ export const useProductStore = defineStore('productStore', {
     ({
       products: [],
       productImages: [],
-    }) as RootState,
+    } as RootState),
   getters: {
     getProducts: (state): Product[] => {
       return state.products;
@@ -27,7 +27,7 @@ export const useProductStore = defineStore('productStore', {
     getProductImagesByProductId: (state) => {
       return (productId: number): ProductAttachment =>
         state.productImages.find(
-          (x) => x.product.id === productId,
+          (x) => x.product.id === productId
         ) as ProductAttachment;
     },
   },
@@ -37,10 +37,10 @@ export const useProductStore = defineStore('productStore', {
       try {
         const { data } = await axios.get<Product[]>(
           `${source}/product`,
-          authConfig,
+          authConfig
         );
         this.products = orderBy(data, (x) => x.id, 'asc').map(
-          (x) => x as Product,
+          (x) => x as Product
         );
         return data;
       } catch (error) {

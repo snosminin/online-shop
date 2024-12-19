@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
 import { orderBy } from 'lodash';
-import { Wishlist } from '../model/Wishlist';
+import { Wishlist } from '../dto/Wishlist';
 import { authConfig, source } from '../util/config';
 
 export interface RootState {
@@ -12,7 +12,7 @@ export const useWishlistStore = defineStore('wishlistStore', {
   state: () =>
     ({
       wishlists: [],
-    }) as RootState,
+    } as RootState),
   getters: {
     getWishlists: (state): Wishlist[] => {
       return state.wishlists;
@@ -28,10 +28,10 @@ export const useWishlistStore = defineStore('wishlistStore', {
       try {
         const { data } = await axios.get<Wishlist[]>(
           `${source}/wishlist`,
-          authConfig,
+          authConfig
         );
         this.wishlists = orderBy(data, (x) => x.id, 'asc').map(
-          (x) => x as Wishlist,
+          (x) => x as Wishlist
         );
         return data;
       } catch (error) {

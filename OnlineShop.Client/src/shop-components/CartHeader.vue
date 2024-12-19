@@ -34,9 +34,9 @@
 <script setup lang="ts">
 import { useCartStore } from '../store/useCartStore';
 import { onMounted, ref } from 'vue';
-import { Cart } from '../model/Cart';
+import { Cart } from '../dto/Cart';
 import { useWishlistStore } from '../store/useWishlistStore';
-import { Wishlist } from '../model/Wishlist';
+import { Wishlist } from '../dto/Wishlist';
 import { first } from 'lodash';
 
 const cartStore = useCartStore();

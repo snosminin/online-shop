@@ -2,9 +2,18 @@
 
 public class CreateUserRequest
 {
-    public required string FirstName { get; set; }
-    public required string LastName { get; set; }
-    public required string Email { get; set; }
-    public required string UserName { get; set; }
-    public required string Password { get; set; }
+    public CreateUserRequest(string firstName, string lastName, string email, string userName, string password)
+    {
+        FirstName = firstName;
+        LastName = lastName;
+        Email = email;
+        UserName = userName;
+        Password = password;
+    }
+
+    public string FirstName { get;  }
+    public string LastName { get;  }
+    public string Email { get;  }
+    public string UserName { get; }
+    public string Password { get;  }
 }

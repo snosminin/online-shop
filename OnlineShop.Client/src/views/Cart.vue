@@ -74,7 +74,7 @@ import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { useCartStore } from '../store/useCartStore';
 import { sumBy } from 'lodash';
-import { Cart, CartItem } from '../model/Cart';
+import { Cart, CartItem } from '../dto/Cart';
 
 const route = useRoute();
 const cartStore = useCartStore();

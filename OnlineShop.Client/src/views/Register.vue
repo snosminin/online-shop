@@ -139,11 +139,11 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { useUserStore } from '../store/userUserStore';
-import { User } from '../model/User';
+import { User } from '../dto/User';
 import { Field, Form, useForm } from 'vee-validate';
 import { object, string } from 'yup';
 import router from '../router';
-import { UserForm } from '../model/UserForm';
+import { UserForm } from '../dto/UserForm';
 
 const userStore = useUserStore();
 const agreementErrorMessage = ref<string>('');
