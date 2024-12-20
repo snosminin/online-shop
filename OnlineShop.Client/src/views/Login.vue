@@ -62,7 +62,7 @@
 
 <script setup lang="ts">
 import { useUserStore } from '../store/userUserStore';
-import { Login } from '../model/Login';
+import { Login } from '../dto/Login';
 import router from '../router';
 import { object, string } from 'yup';
 import { Field, Form } from 'vee-validate';

@@ -34,9 +34,9 @@
 <script setup lang="ts">
 import { useCartStore } from '../store/useCartStore';
 import { onMounted, ref } from 'vue';
-import { Cart } from '../model/Cart';
+import { Cart } from '../dto/Cart';
 import { useWishlistStore } from '../store/useWishlistStore';
-import { Wishlist } from '../model/Wishlist';
+import { Wishlist } from '../dto/Wishlist';
 import { first } from 'lodash';
 
 const cartStore = useCartStore();
@@ -46,7 +46,7 @@ const wishlistStore = useWishlistStore();
 const wishlists = ref<Wishlist[]>();
 
 onMounted(async () => {
-  carts.value = await cartStore.loadAllByUserId(1);
+  carts.value = await cartStore.loadAll();
   wishlists.value = await wishlistStore.loadAll();
 });
 </script>

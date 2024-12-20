@@ -8,13 +8,10 @@ namespace OnlineShop.Server.Controllers;
 
 public class ProductCategoryController : BaseApiController
 {
-    private readonly ILogger<ProductCategoryController> _logger;
     private readonly IProductCategoryService _productCategoryService;
 
-    public ProductCategoryController(ILogger<ProductCategoryController> logger,
-        IProductCategoryService productCategoryService)
+    public ProductCategoryController(IProductCategoryService productCategoryService)
     {
-        _logger = logger;
         _productCategoryService = productCategoryService;
     }
 
@@ -22,17 +19,9 @@ public class ProductCategoryController : BaseApiController
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-        try
-        {
-            var productCategories = await _productCategoryService.GetAllProductCategoriesAsync();
-            var mapped = productCategories.Adapt<List<ProductCategoryDto>>();
+        var productCategories = await _productCategoryService.GetAllProductCategoriesAsync();
+        var mapped = productCategories.Adapt<List<ProductCategoryDto>>();
 
-            return Ok(mapped);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError($"Error in {GetType().Name}: {ex.Message}");
-            return BadRequest($"{BadRequest().StatusCode} : {ex.Message}");
-        }
+        return Ok(mapped);
     }
 }

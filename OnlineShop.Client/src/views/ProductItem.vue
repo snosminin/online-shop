@@ -54,7 +54,7 @@
 
 <script setup lang="ts">
 import { PropType } from 'vue';
-import { Product } from '../model/Product';
+import { Product } from '../dto/Product';
 
 const { modelValue = {} as Product } = defineProps({
   modelValue: Object as PropType<Product>,

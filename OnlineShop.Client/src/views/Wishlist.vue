@@ -36,7 +36,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { Product } from '../model/Product';
+import { Product } from '../dto/Product';
 import { useRoute } from 'vue-router';
 import { useWishlistStore } from '../store/useWishlistStore';
 

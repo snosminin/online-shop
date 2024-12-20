@@ -10,14 +10,11 @@ namespace OnlineShop.Server.Controllers;
 
 public class ShoppingSessionController : BaseApiController
 {
-    private readonly ILogger<ShoppingSessionController> _logger;
     private readonly IShoppingSessionService _shoppingSessionService;
     private readonly UserManager<AppUser> _userManager;
 
-    public ShoppingSessionController(ILogger<ShoppingSessionController> logger,
-        IShoppingSessionService shoppingSessionService, UserManager<AppUser> userManager)
+    public ShoppingSessionController(IShoppingSessionService shoppingSessionService, UserManager<AppUser> userManager)
     {
-        _logger = logger;
         _shoppingSessionService = shoppingSessionService;
         _userManager = userManager;
     }
@@ -26,18 +23,10 @@ public class ShoppingSessionController : BaseApiController
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-        try
-        {
-            var user = await _userManager.FindByNameAsync(User.Identity?.Name!);
-            var shoppingSession = await _shoppingSessionService.GetShoppingSessionByUserIdAsync(user?.Id!);
-            var mapped = shoppingSession.Adapt<ShoppingSessionDto>();
+        var user = await _userManager.FindByNameAsync(User.Identity?.Name!);
+        var shoppingSession = await _shoppingSessionService.GetShoppingSessionByUserIdAsync(user?.Id!);
+        var mapped = shoppingSession.Adapt<ShoppingSessionDto>();
 
-            return Ok(mapped);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError($"Error in {GetType().Name}: {ex.Message}");
-            return BadRequest($"{BadRequest().StatusCode} : {ex.Message}");
-        }
+        return Ok(mapped);
     }
 }

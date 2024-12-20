@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
-import { Cart } from '../model/Cart';
+import { Cart } from '../dto/Cart';
 import { authConfig, source } from '../util/config';
 
 export interface RootState {
@@ -11,7 +11,7 @@ export const useCartStore = defineStore('cartStore', {
   state: () =>
     ({
       carts: [],
-    }) as RootState,
+    } as RootState),
   getters: {
     getCarts: (state): Cart[] => {
       return state.carts;
@@ -22,11 +22,11 @@ export const useCartStore = defineStore('cartStore', {
   },
 
   actions: {
-    async loadAllByUserId(userId: number): Promise<Cart[] | undefined> {
+    async loadAll(): Promise<Cart[] | undefined> {
       try {
         const { data } = await axios.get<Cart>(
-          `${source}/shoppingSession?userId=${userId}`,
-          authConfig,
+          `${source}/shoppingSession`,
+          authConfig
         );
         this.carts = [data];
         return [data];

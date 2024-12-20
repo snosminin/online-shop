@@ -23,7 +23,7 @@ public class UserService : IUserService
         _configuration = configuration;
     }
 
-    public async Task<IdentityResult> Create(RegisterUserRequest registerUserRequest)
+    public async Task<IdentityResult> Create(CreateUserRequest registerUserRequest)
     {
         var appUser = new AppUser { Email = registerUserRequest.Email, UserName = registerUserRequest.UserName };
         var identityResult = await _userManager.CreateAsync(appUser, registerUserRequest.Password);
