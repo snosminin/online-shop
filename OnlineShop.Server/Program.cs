@@ -10,6 +10,7 @@ using OnlineShop.Core.Services;
 using OnlineShop.Infrastructure.Data;
 using OnlineShop.Infrastructure.Repository;
 using System.Text;
+using System.Reflection;
 
 namespace OnlineShop.Server;
 
@@ -21,9 +22,11 @@ public class Program
 
         builder.Services.AddTransient<ErrorHandlerMiddleware>();
 
+        builder.Services.AddMapster();
+        TypeAdapterConfig.GlobalSettings.Scan(Assembly.GetExecutingAssembly());
+
         builder.Services.AddCors();
         builder.Services.AddControllers();
-        builder.Services.AddMapster();
         builder.Services.AddSwaggerGen();
 
         builder.Services.AddDbContext<OnlineShopDbContext>(options =>

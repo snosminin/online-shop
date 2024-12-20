@@ -1,4 +1,4 @@
-using Mapster;
+using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,11 +12,13 @@ public class ShoppingSessionController : BaseApiController
 {
     private readonly IShoppingSessionService _shoppingSessionService;
     private readonly UserManager<AppUser> _userManager;
+    private readonly IMapper _mapper;
 
-    public ShoppingSessionController(IShoppingSessionService shoppingSessionService, UserManager<AppUser> userManager)
+    public ShoppingSessionController(IShoppingSessionService shoppingSessionService, UserManager<AppUser> userManager, IMapper mapper)
     {
         _shoppingSessionService = shoppingSessionService;
         _userManager = userManager;
+        _mapper = mapper;
     }
 
     [Authorize(Roles = "Client")]
@@ -25,7 +27,7 @@ public class ShoppingSessionController : BaseApiController
     {
         var user = await _userManager.FindByNameAsync(User.Identity?.Name!);
         var shoppingSession = await _shoppingSessionService.GetShoppingSessionByUserIdAsync(user?.Id!);
-        var mapped = shoppingSession.Adapt<ShoppingSessionDto>();
+        var mapped = _mapper.Map<ShoppingSession, ShoppingSessionDto>(shoppingSession);
 
         return Ok(mapped);
     }

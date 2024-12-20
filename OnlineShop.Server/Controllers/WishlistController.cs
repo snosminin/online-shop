@@ -1,4 +1,4 @@
-using Mapster;
+using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,12 +12,14 @@ public class WishlistController : BaseApiController
 {
     private readonly UserManager<AppUser> _userManager;
     private readonly IWishlistService _wishlistService;
+    private readonly IMapper _mapper;
 
     public WishlistController(IWishlistService wishlistService,
-        UserManager<AppUser> userManager)
+        UserManager<AppUser> userManager, IMapper mapper)
     {
         _wishlistService = wishlistService;
         _userManager = userManager;
+        _mapper = mapper;
     }
 
 
@@ -27,7 +29,7 @@ public class WishlistController : BaseApiController
     {
         var user = await _userManager.FindByNameAsync(User.Identity?.Name!);
         var wishlists = await _wishlistService.GetAllWishlistsByUserIdAsync(user?.Id!);
-        var mapped = wishlists.Adapt<List<WishlistDto>>();
+        var mapped = _mapper.Map<List<Wishlist>, List<WishlistDto>>(wishlists);
 
         return Ok(mapped);
     }
