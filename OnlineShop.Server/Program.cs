@@ -19,6 +19,8 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        builder.Services.AddTransient<ErrorHandlerMiddleware>();
+
         builder.Services.AddCors();
         builder.Services.AddControllers();
         builder.Services.AddMapster();
@@ -75,6 +77,7 @@ public class Program
         });
 
         var app = builder.Build();
+        app.UseMiddleware<ErrorHandlerMiddleware>();
 
         using var scope = app.Services.CreateScope();
         var services = scope.ServiceProvider;
