@@ -46,7 +46,7 @@ const wishlistStore = useWishlistStore();
 const wishlists = ref<Wishlist[]>();
 
 onMounted(async () => {
-  carts.value = await cartStore.loadAllByUserId(1);
+  carts.value = await cartStore.loadAll();
   wishlists.value = await wishlistStore.loadAll();
 });
 </script>

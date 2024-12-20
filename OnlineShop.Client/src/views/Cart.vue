@@ -16,7 +16,15 @@
         <div class="flex justify-between">
           <div>
             <h5 class="text-gray-800 font-medium">
-              {{ cartItem.product.name }}
+              {{
+                (cartItem.product.name,
+                console.log(
+                  'cartItem',
+                  carts?.length,
+                  cart.cartItems,
+                  cartItem.quantity
+                ))
+              }}
             </h5>
           </div>
           <p class="text-gray-600">x{{ cartItem.quantity }}</p>
@@ -83,7 +91,7 @@ const total = (cartItems: CartItem[]) =>
   sumBy(cartItems, (x) => x.quantity * x.product.price);
 
 onMounted(async () => {
-  await cartStore.loadAllByUserId(1);
-  carts.value = cartStore.getCarts;
+  carts.value = await cartStore.loadAll();
+  console.log('carts', carts.value);
 });
 </script>

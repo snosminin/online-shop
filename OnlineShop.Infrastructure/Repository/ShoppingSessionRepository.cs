@@ -47,7 +47,12 @@ public class ShoppingSessionRepository : IShoppingSessionRepository
 
     public Task<ShoppingSession?> GetShoppingSessionByUserIdAsync(string userId)
     {
-        return _dbContext.ShoppingSessions.Include(x => x.CartItems).ThenInclude(x => x.Product).Include(x => x.User)
-            .Where(x => x.UserId == userId).SingleOrDefaultAsync();
+        return _dbContext.ShoppingSessions
+            .Include(x => x.CartItems)
+            .ThenInclude(x => x.Product)
+            .ThenInclude(x => x.Discount)
+            .Include(x => x.User)
+            .Where(x => x.UserId == userId)
+            .SingleOrDefaultAsync();
     }
 }

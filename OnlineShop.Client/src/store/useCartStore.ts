@@ -22,10 +22,10 @@ export const useCartStore = defineStore('cartStore', {
   },
 
   actions: {
-    async loadAllByUserId(userId: number): Promise<Cart[] | undefined> {
+    async loadAll(): Promise<Cart[] | undefined> {
       try {
         const { data } = await axios.get<Cart>(
-          `${source}/shoppingSession?userId=${userId}`,
+          `${source}/shoppingSession`,
           authConfig
         );
         this.carts = [data];
