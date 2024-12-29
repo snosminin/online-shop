@@ -6,43 +6,34 @@
       <Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors }">
         <div class="space-y-2">
           <div>
-            <label for="email" class="text-gray-600 mb-2 block"
-              >User name</label
-            >
+            <label for="email" class="input-label">User name</label>
             <Field
               v-model="modelValue.Username"
               type="text"
               name="Username"
-              class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400"
+              class="input-field"
               placeholder="youremail.@domain.com"
             />
-            <p class="text-xs text-red-500 flex items-center mt-2">
+            <p class="input-error">
               {{ errors.Username }}
             </p>
           </div>
           <div>
-            <label for="password" class="text-gray-600 mb-2 block"
-              >Password</label
-            >
+            <label for="password" class="input-label">Password</label>
             <Field
               v-model="modelValue.Password"
               type="password"
               name="Password"
-              class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400"
+              class="input-field"
               placeholder="*******"
             />
-            <p class="text-xs text-red-500 flex items-center mt-2">
+            <p class="input-error">
               {{ errors.Password }}
             </p>
           </div>
         </div>
         <div class="mt-4">
-          <button
-            type="submit"
-            class="block w-full py-2 text-center text-white bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium"
-          >
-            Login
-          </button>
+          <button type="submit" class="submit-button">Login</button>
         </div>
       </Form>
 

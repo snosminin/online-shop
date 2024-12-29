@@ -1,5 +1,5 @@
 <template>
-  <div class="font-poppins">
+  <div>
     <Header :cart="false" />
     <Navbar :menu="false" />
     <slot />
