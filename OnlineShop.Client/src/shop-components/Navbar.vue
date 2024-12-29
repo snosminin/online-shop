@@ -29,33 +29,22 @@
         class="flex items-center justify-between flex-grow md:pl-12 py-5"
       >
         <div class="flex items-center space-x-6 capitalize">
-          <RouterLink
-            class="text-gray-200 hover:text-white transition"
-            :to="{ name: 'Products' }"
+          <RouterLink class="navbar-menu-item" :to="{ name: 'Products' }"
             >Home</RouterLink
           >
 
-          <RouterLink
-            class="text-gray-200 hover:text-white transition"
-            :to="{ name: 'AboutUs' }"
+          <RouterLink class="navbar-menu-item" :to="{ name: 'AboutUs' }"
             >About us</RouterLink
           >
 
-          <RouterLink
-            class="text-gray-200 hover:text-white transition"
-            :to="{ name: 'ContactUs' }"
+          <RouterLink class="navbar-menu-item" :to="{ name: 'ContactUs' }"
             >Contact us</RouterLink
           >
         </div>
       </div>
 
       <div class="flex items-end justify-end flex-grow md:pl-12 py-5">
-        <a
-          href=""
-          @click="onLogout"
-          class="text-gray-200 hover:text-white transition"
-          >Logout</a
-        >
+        <a href="" @click="onLogout" class="navbar-menu-item">Logout</a>
       </div>
     </div>
   </nav>
