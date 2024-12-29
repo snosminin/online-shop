@@ -6,92 +6,82 @@
       <Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors }">
         <div class="space-y-2">
           <div>
-            <label for="Username" class="text-gray-600 mb-2 block"
-              >User name</label
-            >
+            <label for="Username" class="input-label">User name</label>
             <Field
               name="Username"
               v-model="modelValue.Username"
               as="input"
-              class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400"
+              class="input-field"
               placeholder="John Smith"
             />
-            <p class="text-xs text-red-500 flex items-center mt-2">
+            <p class="input-error">
               {{ errors.Username }}
             </p>
           </div>
           <div>
-            <label for="Email" class="text-gray-600 mb-2 block"
-              >Email address</label
-            >
+            <label for="Email" class="input-label">Email address</label>
             <Field
               v-model="modelValue.Email"
               name="Email"
               as="input"
-              class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400"
+              class="input-field"
               placeholder="youremail.@domain.com"
             />
-            <p class="text-xs text-red-500 flex items-center mt-2">
+            <p class="input-error">
               {{ errors.Email }}
             </p>
           </div>
           <div>
-            <label for="FirstName" class="text-gray-600 mb-2 block"
-              >First Name</label
-            >
+            <label for="FirstName" class="input-label">First Name</label>
             <Field
               v-model="modelValue.FirstName"
               name="FirstName"
               as="input"
-              class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400"
+              class="input-field"
               placeholder="John Smith"
             />
-            <p class="text-xs text-red-500 flex items-center mt-2">
+            <p class="input-error">
               {{ errors.FirstName }}
             </p>
           </div>
           <div>
-            <label for="LastName" class="text-gray-600 mb-2 block"
-              >Last Name</label
-            >
+            <label for="LastName" class="input-label">Last Name</label>
             <Field
               v-model="modelValue.LastName"
               name="LastName"
               as="input"
-              class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400"
+              class="input-field"
               placeholder="John Smith"
             />
-            <p class="text-xs text-red-500 flex items-center mt-2">
+            <p class="input-error">
               {{ errors.LastName }}
             </p>
           </div>
           <div>
-            <label for="Password" class="text-gray-600 mb-2 block"
-              >Password</label
-            >
+            <label for="Password" class="input-label">Password</label>
             <Field
               v-model="modelValue.Password"
               name="Password"
               type="password"
-              class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400"
+              class="input-field"
               placeholder="*******"
             />
-            <p class="text-xs text-red-500 flex items-center mt-2">
+            <p class="input-error">
               {{ errors.Password }}
             </p>
           </div>
           <div>
-            <label for="ConfirmPassword" class="text-gray-600 mb-2 block"
+            <label for="ConfirmPassword" class="input-label"
               >Confirm password</label
             >
             <Field
               v-model="modelValue.ConfirmPassword"
               name="ConfirmPassword"
               type="password"
-              class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400"
+              class="input-field"
               placeholder="*******"
             />
-            <p class="text-xs text-red-500 flex items-center mt-2">
+            <p class="input-error">
               {{ errors.ConfirmPassword }}
             </p>
           </div>
@@ -108,17 +98,12 @@
               <a href="#" class="text-primary">terms & conditions</a></label
             >
           </div>
-          <p class="text-xs text-red-500 flex items-center mt-2">
+          <p class="input-error">
             {{ agreementErrorMessage }}
           </p>
         </div>
         <div class="mt-4">
-          <button
-            type="submit"
-            class="block w-full py-2 text-center text-white bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium"
-          >
-            create account
-          </button>
+          <button type="submit" class="submit-button">create account</button>
         </div>
       </Form>
 
@@ -139,7 +124,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { useUserStore } from '../store/userUserStore';
-import { User } from '../dto/User';
 import { Field, Form, useForm } from 'vee-validate';
 import { object, string } from 'yup';
 import router from '../router';
