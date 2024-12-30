@@ -9,6 +9,7 @@ import Register from './views/Register.vue';
 import Login from './views/Login.vue';
 import AboutUs from './views/AboutUs.vue';
 import ContactUs from './views/ContactUs.vue';
+import Error from './views/NotFound.vue';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -81,6 +82,14 @@ const routes: RouteRecordRaw[] = [
     component: ContactUs,
     meta: {
       layout: 'ShopLayout',
+    },
+  },
+  {
+    path: '/:notFound',
+    name: 'ErrorView',
+    component: Error,
+    meta: {
+      layout: 'EmptyLayout',
     },
   },
 ];
