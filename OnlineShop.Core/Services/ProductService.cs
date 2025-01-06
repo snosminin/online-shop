@@ -13,7 +13,7 @@ public class ProductService : IProductService
         this._productRepository = productRepository;
     }
 
-    public Task<List<Product>> GetAllProductsAsync()
+    public Task<List<Product>> GetAllProductsByProductCategoryAsync(string productCategoryName)
     {
         return _productRepository.GetAllAsync();
     }

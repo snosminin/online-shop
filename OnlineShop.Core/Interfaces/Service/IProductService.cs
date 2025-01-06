@@ -4,5 +4,5 @@ namespace OnlineShop.Core.Interfaces.Service;
 
 public interface IProductService
 {
-    Task<List<Product>> GetAllProductsAsync();
+    Task<List<Product>> GetAllProductsByProductCategoryAsync(string productCategoryName);
 }

@@ -33,7 +33,9 @@ export const useProductStore = defineStore('productStore', {
   },
 
   actions: {
-    async loadAll(): Promise<Product[] | undefined> {
+    async loadAllByProductCategoryName(
+      productCategoryId: number
+    ): Promise<Product[] | undefined> {
       try {
         const { data } = await axios.get<Product[]>(
           `${source}/product`,

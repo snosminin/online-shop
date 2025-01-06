@@ -20,10 +20,10 @@ public class ProductController : BaseApiController
 
     [Authorize(Roles = "Client")]
     [HttpGet]
-    public async Task<IActionResult> Get()
+    public async Task<IActionResult> Get(string productCategoryName)
     {
-        var products = await _productService.GetAllProductsAsync();
-        var mapped = _mapper.Map< List < Product > ,List <ProductDto>>(products);
+        var products = await _productService.GetAllProductsByProductCategoryAsync(productCategoryName);
+        var mapped = _mapper.Map<List<Product>, List<ProductDto>>(products);
 
         return Ok(mapped);
     }

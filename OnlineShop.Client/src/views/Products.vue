@@ -68,6 +68,6 @@ const sortAndFilter = (products: Product[]) =>
   );
 
 onMounted(async () => {
-  const products = await productStore.loadAll();
+  const products = await productStore.loadAllByProductCategoryName();
 });
 </script>
