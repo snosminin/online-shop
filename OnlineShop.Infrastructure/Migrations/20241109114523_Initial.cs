@@ -591,10 +591,10 @@ public partial class Initial : Migration
                                     INSERT INTO discount VALUES (4, 'Sale Fever Frenzy', '', 0.17, '2024-11-08 13:15:59.67278', NULL, NULL) ON CONFLICT DO NOTHING;
                                     INSERT INTO discount VALUES (5, 'VIP Valuables', '', 0.09, '2024-11-08 13:15:59.67278', NULL, NULL) ON CONFLICT DO NOTHING;
 
-                                    INSERT INTO product_category VALUES (1, 'Smartphones', '', '2024-11-08 13:15:59.410021', NULL, NULL) ON CONFLICT DO NOTHING;
+                                    INSERT INTO product_category VALUES (1, 'Television', '', '2024-11-08 13:15:59.410021', NULL, NULL) ON CONFLICT DO NOTHING;
                                     INSERT INTO product_category VALUES (2, 'Laptops', '', '2024-11-08 13:15:59.410021', NULL, NULL) ON CONFLICT DO NOTHING;
                                     INSERT INTO product_category VALUES (3, 'Speaker', '', '2024-11-08 13:15:59.410021', NULL, NULL) ON CONFLICT DO NOTHING;
-                                    INSERT INTO product_category VALUES (4, 'Television', '', '2024-11-08 13:15:59.410021', NULL, NULL) ON CONFLICT DO NOTHING;
+                                    INSERT INTO product_category VALUES (4, 'Smartphones', '', '2024-11-08 13:15:59.410021', NULL, NULL) ON CONFLICT DO NOTHING;
                                     INSERT INTO product_category VALUES (5, 'Cameras', '', '2024-11-08 13:15:59.410021', NULL, NULL) ON CONFLICT DO NOTHING;
                                     INSERT INTO product_category VALUES (6, 'Computers', '', '2024-11-08 13:15:59.410021', NULL, NULL) ON CONFLICT DO NOTHING;
                                     INSERT INTO product_category VALUES (7, 'Power banks', '', '2024-11-08 13:15:59.410021', NULL, NULL) ON CONFLICT DO NOTHING;
