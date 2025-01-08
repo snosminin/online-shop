@@ -13,16 +13,8 @@ import NotFound from './views/NotFound.vue';
 
 const routes: RouteRecordRaw[] = [
   {
-    path: '/',
+    path: '/:productCategoryName?',
     name: 'Products',
-    component: Products,
-    meta: {
-      layout: 'ShopLayout',
-    },
-  },
-  {
-    path: '/:productCategory',
-    name: 'ProductsByProductCategory',
     component: Products,
     meta: {
       layout: 'ShopLayout',

@@ -7,24 +7,39 @@ using OnlineShop.Core.Model;
 
 namespace OnlineShop.Server.Controllers;
 
-public class ProductController : BaseApiController
+[Produces("application/json")]
+[ApiController]
+public class ProductController : ControllerBase
 {
     private readonly IProductService _productService;
+    private readonly IProductCategoryService _productCategoryService;
     private readonly IMapper _mapper;
 
-    public ProductController(IProductService productService, IMapper mapper)
+    public ProductController(IProductService productService, IMapper mapper,
+        IProductCategoryService productCategoryService)
     {
         _productService = productService;
         _mapper = mapper;
+        _productCategoryService = productCategoryService;
     }
 
     [Authorize(Roles = "Client")]
     [HttpGet]
-    public async Task<IActionResult> Get(string productCategoryName)
+    [Route("api/[controller]/")]
+    public async Task<IActionResult> Get(string? productCategoryName)
     {
-        var products = await _productService.GetAllProductsByProductCategoryAsync(productCategoryName);
-        var mapped = _mapper.Map<List<Product>, List<ProductDto>>(products);
+        List<Product> products;
+        if (string.IsNullOrEmpty(productCategoryName))
+            products = await _productService.GetAllAsync();
+        else
+        {
+            var productCategory = await _productCategoryService.GetByNameAsync(productCategoryName);
+            if (productCategory == null)
+                return NotFound("Can't find category with such name");
+            products = await _productService.GetByProductCategoryIdAsync(productCategory.Id);
+        }
 
+        var mapped = _mapper.Map<List<Product>, List<ProductDto>>(products);
         return Ok(mapped);
     }
 }

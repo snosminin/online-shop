@@ -15,6 +15,13 @@ public class ProductCategoryRepository : IProductCategoryRepository
         _dbContext = dbContext;
     }
 
+    public Task<ProductCategory?> GetByName(string name)
+    {
+        // ReSharper disable once StringLiteralTypo
+        return _dbContext.ProductCategories
+            .FromSql<ProductCategory>($"SELECT * FROM product_category WHERE name ILIKE {name}")
+            .FirstOrDefaultAsync();
+    }
 
     public Task<ProductCategory?> GetByIdAsync(int id)
     {

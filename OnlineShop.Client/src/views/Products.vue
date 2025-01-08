@@ -61,13 +61,15 @@ const sortAndFilter = (products: Product[]) =>
     _.filter(
       products,
       (x) =>
-        !route.params.productCategory ||
-        x.productCategory.name == route.params.productCategory
+        !route.params.productCategoryName ||
+        x.productCategory.name == route.params.productCategoryName
     ),
     getSort()
   );
 
 onMounted(async () => {
-  const products = await productStore.loadAllByProductCategoryName();
+  const products = await productStore.loadAllByProductCategoryName(
+    route.params.productCategoryName as string
+  );
 });
 </script>

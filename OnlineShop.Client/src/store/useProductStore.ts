@@ -34,11 +34,15 @@ export const useProductStore = defineStore('productStore', {
 
   actions: {
     async loadAllByProductCategoryName(
-      productCategoryId: number
+      productCategoryName?: string
     ): Promise<Product[] | undefined> {
       try {
         const { data } = await axios.get<Product[]>(
-          `${source}/product`,
+          `${source}/product${
+            productCategoryName
+              ? '?productCategoryName=' + productCategoryName
+              : ''
+          }`,
           authConfig
         );
         this.products = orderBy(data, (x) => x.id, 'asc').map(

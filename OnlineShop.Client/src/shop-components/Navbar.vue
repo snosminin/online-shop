@@ -14,8 +14,8 @@
             v-for="(item, index) in store.productCategories"
             :key="index"
             :to="{
-              name: 'ProductsByProductCategory',
-              params: { productCategory: item.name },
+              name: 'Products',
+              params: { productCategoryName: item.name },
             }"
             class="flex items-center px-3 py-3 hover:bg-gray-100 transition"
           >
