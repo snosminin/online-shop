@@ -14,7 +14,7 @@ useUserStore();
 
 const router = useRouter();
 const layout = computed(
-  () => router.currentRoute.value.meta.layout ?? 'EmptyLayout',
+  () => router.currentRoute.value.meta.layout ?? 'EmptyLayout'
 );
 
 onMounted(async () => {

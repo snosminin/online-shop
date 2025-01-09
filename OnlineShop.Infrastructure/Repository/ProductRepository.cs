@@ -21,6 +21,12 @@ public class ProductRepository : IProductRepository
             .Include(x => x.ProductCategory).ToList());
     }
 
+    public Task<List<Product>> GetByProductCategoryIdAsync(int categoryId)
+    {
+        return Task.FromResult(_dbContext.Products.Include(x => x.Discount)
+            .Include(x => x.ProductCategory).Where(x => x.ProductCategoryId == categoryId).ToList());
+    }
+
     public Task<Product?> GetByIdAsync(int id)
     {
         return _dbContext.Products.Where(x => x.Id == id).FirstOrDefaultAsync();

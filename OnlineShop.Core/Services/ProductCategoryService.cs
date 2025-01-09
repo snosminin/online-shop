@@ -17,4 +17,11 @@ public class ProductCategoryService : IProductCategoryService
     {
         return _productCategoryRepository.GetAllAsync();
     }
+
+    public Task<ProductCategory?> GetByNameAsync(string name)
+    {
+        return string.IsNullOrEmpty(name)
+            ? Task.FromResult<ProductCategory?>(null)
+            : _productCategoryRepository.GetByName(name);
+    }
 }

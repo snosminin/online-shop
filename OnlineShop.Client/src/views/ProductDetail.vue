@@ -125,7 +125,9 @@ const discountedPrice = () => {
 };
 
 onMounted(async () => {
-  await productStore.loadAll();
+  await productStore.loadAllByProductCategoryName(
+    route.params.productCategoryName as string
+  );
   product.value = productStore.getById(+route.params.id);
 });
 </script>

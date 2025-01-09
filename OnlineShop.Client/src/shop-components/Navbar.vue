@@ -14,8 +14,8 @@
             v-for="(item, index) in store.productCategories"
             :key="index"
             :to="{
-              name: 'ProductsByProductCategory',
-              params: { productCategory: item.name },
+              name: 'Products',
+              params: { productCategoryName: item.name },
             }"
             class="flex items-center px-3 py-3 hover:bg-gray-100 transition"
           >
@@ -28,7 +28,7 @@
         v-if="menu"
         class="flex items-center justify-between flex-grow md:pl-12 py-5"
       >
-        <div class="flex items-center space-x-6 capitalize">
+        <div class="flex items-center space-x-6 capitalize text-white">
           <RouterLink class="navbar-menu-item" :to="{ name: 'Products' }"
             >Home</RouterLink
           >
@@ -43,8 +43,12 @@
         </div>
       </div>
 
-      <div class="flex items-end justify-end flex-grow md:pl-12 py-5">
-        <a href="" @click="onLogout" class="navbar-menu-item">Logout</a>
+      <div
+        class="flex items-end justify-end flex-grow md:pl-12 py-5 text-white"
+      >
+        <a v-if="menu" href="" @click="onLogout" class="navbar-menu-item"
+          >Logout</a
+        >
       </div>
     </div>
   </nav>

@@ -9,19 +9,12 @@ import Register from './views/Register.vue';
 import Login from './views/Login.vue';
 import AboutUs from './views/AboutUs.vue';
 import ContactUs from './views/ContactUs.vue';
+import NotFound from './views/NotFound.vue';
 
 const routes: RouteRecordRaw[] = [
   {
-    path: '/',
+    path: '/:productCategoryName?',
     name: 'Products',
-    component: Products,
-    meta: {
-      layout: 'ShopLayout',
-    },
-  },
-  {
-    path: '/:productCategory',
-    name: 'ProductsByProductCategory',
     component: Products,
     meta: {
       layout: 'ShopLayout',
@@ -81,6 +74,14 @@ const routes: RouteRecordRaw[] = [
     component: ContactUs,
     meta: {
       layout: 'ShopLayout',
+    },
+  },
+  {
+    path: '/not_found',
+    name: 'NotFound',
+    component: NotFound,
+    meta: {
+      layout: 'EmptyLayout',
     },
   },
 ];
