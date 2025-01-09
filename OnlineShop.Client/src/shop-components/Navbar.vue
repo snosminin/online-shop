@@ -28,7 +28,7 @@
         v-if="menu"
         class="flex items-center justify-between flex-grow md:pl-12 py-5"
       >
-        <div class="flex items-center space-x-6 capitalize">
+        <div class="flex items-center space-x-6 capitalize text-white">
           <RouterLink class="navbar-menu-item" :to="{ name: 'Products' }"
             >Home</RouterLink
           >
@@ -43,7 +43,9 @@
         </div>
       </div>
 
-      <div class="flex items-end justify-end flex-grow md:pl-12 py-5">
+      <div
+        class="flex items-end justify-end flex-grow md:pl-12 py-5 text-white"
+      >
         <a href="" @click="onLogout" class="navbar-menu-item">Logout</a>
       </div>
     </div>
