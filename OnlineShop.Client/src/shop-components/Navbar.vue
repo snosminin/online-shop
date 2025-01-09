@@ -46,7 +46,9 @@
       <div
         class="flex items-end justify-end flex-grow md:pl-12 py-5 text-white"
       >
-        <a href="" @click="onLogout" class="navbar-menu-item">Logout</a>
+        <a v-if="menu" href="" @click="onLogout" class="navbar-menu-item"
+          >Logout</a
+        >
       </div>
     </div>
   </nav>

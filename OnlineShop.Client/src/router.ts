@@ -77,8 +77,8 @@ const routes: RouteRecordRaw[] = [
     },
   },
   {
-    path: '/:pathMatch(.*)*',
-    name: 'ErrorView',
+    path: '/not_found',
+    name: 'NotFound',
     component: NotFound,
     meta: {
       layout: 'EmptyLayout',

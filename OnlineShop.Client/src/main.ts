@@ -17,7 +17,10 @@ import Login from './views/Login.vue';
 import EmptyLayout from './shop-components/EmptyLayout.vue';
 import AboutUs from './views/AboutUs.vue';
 import ContactUs from './views/ContactUs.vue';
+import setupInterceptors from './store/interceptor';
+import NotFound from './views/NotFound.vue';
 
+setupInterceptors(router);
 const app = createApp(App);
 
 app.component('ShopLayout', ShopLayout);
@@ -33,6 +36,7 @@ app.component('Register', Register);
 app.component('Login', Login);
 app.component('AboutUs', AboutUs);
 app.component('ContactUs', ContactUs);
+app.component('NotFound', NotFound);
 
 app.use(createPinia());
 app.use(router);
